@@ -1,0 +1,34 @@
+This has been tested using:
+
+    OSX 10.7.4
+    Vagrant version 1.0.5
+    Virtual Box 4.2.4
+
+Usage:
+
+    1. Get this repository into a local directory.  Something your user has access to, 
+        and that your favorite editor can open up.
+    
+    2. In the command-line, go to the directory containing this README, and run `vagrant up`
+    
+    3. You should *not* see any errors when vagrant is done, if you do something went wrong.  
+        This works for me, and I am not planning to offer support on this ATM.
+    
+    4. Setup testsite.dev (defined in the custom cookbook or Apache2). Edit your /etc/hosts
+        file, and add a line like this:
+        127.0.0.1   testsite.dev
+    
+    5. run `vagrant ssh` to open a terminal to your new VM.
+        a. run `cd /vagrant` and you should see this file!  HI!
+        b. run `apt-get curl`
+        c. run `curl -s https://getcomposer.org/installer | php` to get composer
+        d. run `php ./composer.phar install`
+        e. you should now have the required software. 
+
+Access your server:
+    
+    SSH via vagrant with `vagrant ssh`
+    Access the web folder in this directory via apache served from your server via:
+        http://testsite.dev:8080
+
+Hope this helps!

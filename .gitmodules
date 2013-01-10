@@ -1,0 +1,30 @@
+[submodule "cookbooks/apache2"]
+	path = cookbooks/apache2
+	url = https://github.com/opscode-cookbooks/apache2.git
+[submodule "cookbooks/apt"]
+	path = cookbooks/apt
+	url = https://github.com/opscode-cookbooks/apt.git
+[submodule "cookbooks/git"]
+	path = cookbooks/git
+	url = https://github.com/opscode-cookbooks/git.git
+[submodule "cookbooks/mysql"]
+	path = cookbooks/mysql
+	url = https://github.com/opscode-cookbooks/mysql.git
+[submodule "cookbooks/openssl"]
+	path = cookbooks/openssl
+	url = https://github.com/opscode-cookbooks/openssl.git
+[submodule "cookbooks/php"]
+	path = cookbooks/php
+	url = https://github.com/opscode-cookbooks/php.git
+[submodule "cookbooks/postgresql"]
+	path = cookbooks/postgresql
+	url = https://github.com/opscode-cookbooks/postgresql.git
+[submodule "cookbooks/rsync"]
+	path = cookbooks/rsync
+	url = https://github.com/opscode-cookbooks/rsync.git
+[submodule "cookbooks/sqlite"]
+	path = cookbooks/sqlite
+	url = https://github.com/opscode-cookbooks/sqlite.git
+[submodule "cookbooks/subversion"]
+	path = cookbooks/subversion
+	url = https://github.com/opscode-cookbooks/subversion.git

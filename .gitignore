@@ -1,0 +1,7 @@
+.vagrant
+composer.lock
+composer.phar
+bin/
+vendor/
+.idea/
+phpstormFiles/
