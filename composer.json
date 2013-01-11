@@ -8,10 +8,22 @@
         "behat/mink-selenium2-driver": "*",
         "behat/mink-sahi-driver": "*",
         "behat/mink-zombie-driver": "*",
-        "phpspec/phpspec2": "*" 
-        
+        "phpspec/phpspec2": "*",
+        "defensio/defensio-php": "2.0"
     },
-    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "defensio/defensio-php",
+                "version": "2.0",
+                "dist": {
+                    "url": "https://github.com/defensio/defensio-php/archive/master.zip",
+                    "type": "zip"
+                }
+            }
+        }
+    ],
     "autoload": {"psr-0": {"": "src"}},
     "config": {
         "bin-dir": "bin/"
