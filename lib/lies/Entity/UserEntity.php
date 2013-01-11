@@ -2,12 +2,14 @@
 namespace Lies\Entity;
 
 use Lies\Exception\UserException;
+use Lies\Entity\Entity;
 
-class UserEntity
+class UserEntity extends Entity
 {
     private $id;
     private $email;
     private $password;
+    private $role;
 
 
     public function getId()
@@ -17,6 +19,10 @@ class UserEntity
 
     public function setId($id)
     {
+        if ($id == null || !is_integer($id)) {
+            throw new UserException ('Invalid ID ('.$id.')');
+        }
+
         $this->id = $id;
     }
 
@@ -44,5 +50,22 @@ class UserEntity
             throw new UserException('Invalid password (' . $password . ').');
         }
         $this->password = $password;
+    }
+
+    public function toArray() {
+        return get_object_vars($this);
+    }
+
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    public function setRole($role)
+    {
+        if ($role === null || trim($role) == '') {
+            throw new UserException('Invalid role (' . $role . ').');
+        }
+        $this->role = $role;
     }
 }

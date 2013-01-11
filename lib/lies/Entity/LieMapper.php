@@ -14,7 +14,12 @@ class LieMapper
 
     public function getAll()
     {
-        $sql = "SELECT * FROM Lies";
+        $sql = "
+            SELECT
+                *
+            FROM
+                lies
+        ";
         $sth = $this->_db->prepare($sql);
         $sth->execute();
         $rows = $sth->fetchAll(); 
@@ -24,9 +29,16 @@ class LieMapper
 
     public function get($id)
     {
-        $sql = "SELECT * FROM Lies WHERE id = ?";
+        $sql = "
+            SELECT
+                *
+            FROM
+                lies
+            WHERE
+                id = :id
+        ";
         $sth = $this->_db->prepare($sql);
-        $sth->execute(array($id));
+        $sth->execute(array(':id'=>$id));
         $row = $sth->fetch();
 
         if (count($row) > 0) {
@@ -38,7 +50,14 @@ class LieMapper
 
     public function getAllValid()
     {
-        $sql = "SELECT * FROM Lies WHERE valid=1";
+        $sql = "
+            SELECT
+                *
+            FROM
+                lies
+            WHERE
+                valid=1
+        ";
         $sth = $this->_db->prepare($sql);
         $sth->execute();
         $rows = $sth->fetchAll(); 
@@ -49,17 +68,32 @@ class LieMapper
     public function create(LieEntity $lieEntity)
     {
         $sql = "
-            INSERT INTO Lies
-            (id, date, description, user_id, valid)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO
+              lies
+              (
+                  id,
+                  date,
+                  description,
+                  user_id,
+                  valid
+              )
+            VALUES
+              (
+                  :id,
+                  :date,
+                  :description,
+                  :user_id,
+                  :valid
+
+              )
             ";
         $sth = $this->_db->prepare($sql);
         $response = $sth->execute(array(
-            $lieEntity->getId(),
-            $lieEntity->getDate(),
-            $lieEntity->getDescription(),
-            $lieEntity->getUserId(),
-            $lieEntity->getValid()
+            ':id'           => $lieEntity->getId(),
+            ':date'         => $lieEntity->getDate(),
+            ':description'  => $lieEntity->getDescription(),
+            ':user_id'      => $lieEntity->getUserId(),
+            ':valid'        => $lieEntity->getValid()
         ));
 
         return $response;
@@ -67,9 +101,14 @@ class LieMapper
 
     public function delete($lieEntityId)
     {
-        $sql = "DELETE FROM Lies WHERE id = ?";
+        $sql = "
+            DELETE FROM
+                lies
+            WHERE
+                id = :id
+        ";
         $sth = $this->_db->prepare($sql);
-        $response = $sth->execute(array($lieEntityId));
+        $response = $sth->execute(array(':id' => $lieEntityId));
 
         if ($response != true) {
             throw new LieException ('Failed to delete lie record ('.$lieEntityId.')');

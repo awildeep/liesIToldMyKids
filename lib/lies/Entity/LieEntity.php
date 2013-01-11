@@ -2,8 +2,9 @@
 namespace Lies\Entity;
 
 use Lies\Exception\LieException;
+use Lies\Entity\Entity;
 
-class LieEntity
+class LieEntity extends Entity
 {
     private $id;
     private $date;
@@ -18,8 +19,8 @@ class LieEntity
 
     public function setId($id)
     {
-        if ($id == null || $id == '') {
-            throw new LieException ('Invalid $lieEntityId ('.$id.')');
+        if ($id == null || !is_integer($id)) {
+            throw new LieException ('Invalid ID ('.$id.')');
         }
 
         $this->id = $id;
@@ -32,6 +33,9 @@ class LieEntity
 
     public function setDate($date)
     {
+        if ($date == null || $date == '') {
+            throw new LieException ('Invalid date ('.$date.')');
+        }
         $this->date = $date;
     }
 
@@ -57,6 +61,9 @@ class LieEntity
 
     public function setUserId($user_id)
     {
+        if (!is_integer($user_id)) {
+            throw new LieException ('Invalid ID, must be an integer ('.$user_id.')');
+        }
         $this->user_id = $user_id;
     }
 
@@ -68,5 +75,9 @@ class LieEntity
     public function setValid($valid)
     {
         $this->valid = $valid;
+    }
+
+    public function toArray() {
+        return get_object_vars($this);
     }
 }

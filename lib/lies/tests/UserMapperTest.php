@@ -5,9 +5,7 @@ namespace Lies\tests;
 use Lies\Entity\UserEntity;
 use Lies\Entity\UserMapper;
 
-require_once (dirname(__FILE__) . '/../Entity/UserEntity.php');
-require_once (dirname(__FILE__) . '/../Entity/UserMapper.php');
-require_once (dirname(__FILE__) . '/../Exception/UserException.php');
+require_once (dirname(__FILE__) . '/bootstrap.php');
 
 class UserMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,7 +16,7 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
     {
         // Create our raw Lie info
         $userInfo = array(
-            'id' => uniqid(),
+            'id' => time(),
             'email' => 'junk@thinkof.net',
             'password' => uniqid(),
         );
@@ -64,7 +62,7 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
     public function createNewUser()
     {
         $userInfo = array(
-            'id' => uniqid(),
+            'id' => time(),
             'email' => 'junk@thinkof.net',
             'password' => uniqid(),
         );

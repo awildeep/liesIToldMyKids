@@ -1,0 +1,87 @@
+TDD Bootcamp - Lesson 2
+=======================
+
+
+Lies I Told My Kids
+-------------------
+
+* jokey web site idea I had
+* originally done so I could experiment with building a Python app on GAE
+
+# What are the parts?
+
+* two web pages
+-> form that allows people to submit a lie
+-> page that displays the lies we've collected
+
+* MySQL as the data store
+-> one table that stores our lies
+--> uuid, date, description, user id, valid or not based on spam check
+
+-> one table that stores our users
+--> uuid, email, type
+
+* using Defensio API to determine if content is simply spam
+-> use their API to analyze posted submissions and reject ones that are "spam"
+
+# What are our goals
+* have a fully-working application that also has as close to 100% code
+coverage
+
+Defining Our Domain Model
+=========================
+
+Two entities
+
+Lie
+User
+
+Lies belong to Users
+
+Two types of Users
+-> general
+-> admin
+
+General Users can create new Lies
+General Users can edit Lies that belong to them
+General Users can delete Lies
+
+Admin Users can create new Lies
+Admin Users can edit Lies that belong to anyone
+Admin Users can delete Lies
+
+
+Using Entity -> Data mapper pattern
+
+LieMapper
+LieEntity
+UserMapper
+UserEntity
+
+Mappers takes a DB connection as a parameter
+then returns a collection of Lie objects 
+
+Why?
+
+#1. It allows us to change the data source without changing the entity
+#2. It allows us to inject a mocked DB object for tests
+
+
+Create tests for our mapper and the entity object
+=================================================
+
+What do we need to do?
+
+-> get 1 lie
+-> get all lies
+-> get all valid lies
+-> create a new lie
+-> delete an existing lie
+-> update an existing lie
+
+HOMEWORK: create tests for code that the description for a Lie 
+and run it against the Defensio API
+
+-> create a user
+-> edit a user (can only edit your own data, or admin can delete any user)
+-> delete a user (admin only) 

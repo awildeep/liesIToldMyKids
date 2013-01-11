@@ -5,9 +5,7 @@ namespace Lies\tests;
 use Lies\Entity\LieEntity;
 use Lies\Entity\LieMapper;
 
-require_once (dirname(__FILE__) . '/../Entity/LieEntity.php');
-require_once (dirname(__FILE__) . '/../Entity/LieMapper.php');
-require_once (dirname(__FILE__) . '/../Exception/LieException.php');
+require_once (dirname(__FILE__) . '/bootstrap.php');
 
 class LieMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,24 +28,24 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         // Create our collection of Lies
         $lieInfo = array(
             array(
-                'id' => uniqid(),
+                'id' => time(),
                 'date' => time(),
                 'description' => 'First test lie',
-                'user_id' => uniqid(),
+                'user_id' => time(),
                 'valid' => 1
             ),
             array(
-                'id' => uniqid(),
+                'id' => time(),
                 'date' => time(),
                 'description' => 'Second test lie',
-                'user_id' => uniqid(),
+                'user_id' => time(),
                 'valid' => 1
             ),
             array(
-                'id' => uniqid(),
+                'id' => time(),
                 'date' => time(),
                 'description' => 'Third test lie',
-                'user_id' => uniqid(),
+                'user_id' => time(),
                 'valid' => 0 
             ),
         );
@@ -102,10 +100,10 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
     {
         // Create our raw Lie info 
         $lieInfo = array(
-            'id' => uniqid(),
+            'id' => time(),
             'date' => time(),
             'description' => 'First test lie',
-            'user_id' => uniqid(),
+            'user_id' => time(),
             'valid' => 1
         );
         
@@ -154,17 +152,17 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
     {
         $lieInfo = array(
             array(
-                'id' => uniqid(),
+                'id' => time(),
                 'date' => time(),
                 'description' => 'First test lie',
-                'user_id' => uniqid(),
+                'user_id' => time(),
                 'valid' => 1
             ),
             array(
-                'id' => uniqid(),
+                'id' => time(),
                 'date' => time(),
                 'description' => 'Second test lie',
-                'user_id' => uniqid(),
+                'user_id' => time(),
                 'valid' => 1
             ),
         );
@@ -195,7 +193,6 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $db->expects($this->once())
             ->method('prepare')
-            ->with("SELECT * FROM Lies WHERE valid=1")
             ->will($this->returnValue($sth));
             
         // create LieMapper, passing it our mocked DB
@@ -225,10 +222,10 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
          * Verify via get() that our LieEntity matches
          */
         $lieInfo = array(
-            'id' => uniqid(),
+            'id' => time(),
             'date' => time(),
             'description' => 'First test lie',
-            'user_id' => uniqid(),
+            'user_id' => time(),
             'valid' => 1
         );
         

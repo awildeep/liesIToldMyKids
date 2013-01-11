@@ -7,3 +7,50 @@ App build from a class with Chris Hartjes @grmpyprogrammer
         http://grumpy-testing.com/
         http://grumpy-phpunit.com/
         https://leanpub.com/grumpy-testing
+
+App concept:
+    Lies I told my kids
+
+    Plain PHP site
+
+        homepage - paginated display of lies
+        submit page
+        admin - delete/edit users/lies
+
+    Two tables
+        1. lies
+            LieMapper
+            LieEntity
+
+            uuid, date, description, userid, valid
+        2. user
+            UserMapper
+            UserEntity
+
+            uuid, email, role (general/admin)
+
+    General users can:
+        create lies
+        edit lies that belong to them
+        delete lies that belong to them
+
+    Admin users
+        create lies
+        edit lies that belong to them
+        delete lies that belong to them
+
+    Mappers take DB connection parameter
+        then return a collection of lie/user objects
+        (allows for mocking, or dsn)
+
+
+Scenarios:
+    get 1 lie
+    get all lies
+    get all valid lies
+
+
+HOMEWORK;  Chris to send the source code
+    create an update method
+    create a userEntity & userMapper
+    defensio wrapper
