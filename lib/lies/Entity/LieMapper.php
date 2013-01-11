@@ -1,5 +1,7 @@
 <?php
-namespace Lies\Lies\Entity;
+namespace Lies\Entity;
+
+use \Lies\Exception\LieException;
 
 class LieMapper
 {
@@ -44,7 +46,7 @@ class LieMapper
         return array_map(array($this, '_createEntityFromRow'), $rows); 
     }
 
-    public function create($lieEntity)
+    public function create(LieEntity $lieEntity)
     {
         $sql = "
             INSERT INTO Lies
@@ -53,11 +55,11 @@ class LieMapper
             ";
         $sth = $this->_db->prepare($sql);
         $response = $sth->execute(array(
-            $lieEntity->id,
-            $lieEntity->date,
-            $lieEntity->description,
-            $lieEntity->user_id,
-            $lieEntity->valid
+            $lieEntity->getId(),
+            $lieEntity->getDate(),
+            $lieEntity->getDescription(),
+            $lieEntity->getUserId(),
+            $lieEntity->getValid()
         ));
 
         return $response;
@@ -65,16 +67,12 @@ class LieMapper
 
     public function delete($lieEntityId)
     {
-        if ($lieEntityId == null || $lieEntityId == '') {
-            return false;
-        }
-
         $sql = "DELETE FROM Lies WHERE id = ?";
         $sth = $this->_db->prepare($sql);
         $response = $sth->execute(array($lieEntityId));
 
         if ($response != true) {
-            return false;
+            throw new LieException ('Failed to delete lie record ('.$lieEntityId.')');
         }
 
         if ($sth->rowCount() == 1) {
@@ -87,11 +85,11 @@ class LieMapper
     protected function _createEntityFromRow($row)
     {
         $lie = new LieEntity();
-        $lie->id = $row['id'];
-        $lie->date = $row['date'];
-        $lie->description = $row['description'];
-        $lie->user_id = $row['user_id'];
-        $lie->valid = $row['valid'];
+        $lie->setId($row['id']);
+        $lie->setDate($row['date']);
+        $lie->setDescription($row['description']);
+        $lie->setUserId($row['user_id']);
+        $lie->setValid($row['valid']);
 
         return $lie;
     }

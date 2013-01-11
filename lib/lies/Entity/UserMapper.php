@@ -1,21 +1,32 @@
 <?php
-namespace Lies\Lies\Entity;
+namespace Lies\Entity;
+
+use \Lies\Exception\UserException;
 
 class UserMapper
 {
-    protected $_db;
+    protected $db;
 
     public function __construct($db)
     {
-        $this->_db = $db;
+        $this->db = $db;
     }
 
     public function get($id)
     {
-        $sql = "SELECT * FROM users WHERE id = ?";
-        $sth = $this->_db->prepare($sql);
-        $sth->execute(array($id));
-        $row = $sth->fetch();
+        $sql = "
+            SELECT
+                id,
+                email,
+                password
+            FROM
+                users
+            WHERE
+                id = :id
+            ";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array(':id' => $id));
+        $row = $stmt->fetch();
 
         if (count($row) > 0) {
             return $this->_createEntityFromRow($row);
@@ -26,16 +37,32 @@ class UserMapper
 
     public function create(UserEntity $userEntity)
     {
+
+
+
         $sql = "
-            INSERT INTO users
-            (id, email)
-            VALUES (?, ?)
+            INSERT INTO
+                users
+                (
+                    id,
+                    email,
+                    password
+                )
+            VALUES
+                (
+                    :id,
+                    :email,
+                    :password
+                )
             ";
-        $sth = $this->_db->prepare($sql);
-        $response = $sth->execute(array(
-                $userEntity->id,
-                $userEntity->email
-            ));
+        $stmt = $this->db->prepare($sql);
+        $response = $stmt->execute(
+            array(
+                ':id' => $userEntity->getId(),
+                ':email' => $userEntity->getEmail(),
+                ':password' => $userEntity->getPassword()
+            )
+        );
 
         return $response;
     }
@@ -43,8 +70,9 @@ class UserMapper
     protected function _createEntityFromRow($row)
     {
         $user = new UserEntity();
-        $user->id = $row['id'];
-        $user->email = $row['email'];
+        $user->setId($row['id']);
+        $user->setEmail($row['email']);
+        $user->setPassword($row['password']);
 
         return $user;
     }

@@ -2,8 +2,12 @@
 
 namespace Lies\tests;
 
-use Lies\Lies\Entity\LieEntity;
-use Lies\Lies\Entity\LieMapper;
+use Lies\Entity\LieEntity;
+use Lies\Entity\LieMapper;
+
+require_once (dirname(__FILE__) . '/../Entity/LieEntity.php');
+require_once (dirname(__FILE__) . '/../Entity/LieMapper.php');
+require_once (dirname(__FILE__) . '/../Exception/LieException.php');
 
 class LieMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,11 +59,11 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         $expectedLies[2] = new LieEntity();
 
         foreach ($lieInfo as $idx => $details) {
-            $expectedLies[$idx]->id = $details['id'];
-            $expectedLies[$idx]->date = $details['date'];
-            $expectedLies[$idx]->description = $details['description'];
-            $expectedLies[$idx]->user_id = $details['user_id'];
-            $expectedLies[$idx]->valid = $details['valid'];
+            $expectedLies[$idx]->setId($details['id']);
+            $expectedLies[$idx]->setDate($details['date']);
+            $expectedLies[$idx]->setDescription($details['description']);
+            $expectedLies[$idx]->setUserId($details['user_id']);
+            $expectedLies[$idx]->setValid($details['valid']);
         }
 
         // Mock our query object
@@ -106,11 +110,13 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         );
         
         // Create collection of Lie objects based on array info
-        $expectedLie = new \lies\LieEntity();
+        $expectedLie = new LieEntity();
 
-        foreach ($lieInfo as $key => $value) {
-            $expectedLie->{$key} = $value;
-        }
+        $expectedLie->setId($lieInfo['id']);
+        $expectedLie->setDate($lieInfo['date']);
+        $expectedLie->setDescription($lieInfo['description']);
+        $expectedLie->setUserId($lieInfo['user_id']);
+        $expectedLie->setValid($lieInfo['valid']);
 
         // Mock our PDO statement
         $sth = $this->getMockBuilder('stdClass')
@@ -128,7 +134,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sth));
             
         // create LieMapper, passing it our mocked DB
-        $lieMapper = new \lies\LieMapper($db);
+        $lieMapper = new LieMapper($db);
 
         // ask it to get all the Lies
         $lie = $lieMapper->get($lieInfo['id']);
@@ -165,15 +171,15 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
 
         // Create collection of Lie objects based on array info
         $expectedLies = array();
-        $expectedLies[0] = new \lies\LieEntity();
-        $expectedLies[1] = new \lies\LieEntity();
+        $expectedLies[0] = new LieEntity();
+        $expectedLies[1] = new LieEntity();
 
         foreach ($lieInfo as $idx => $details) {
-            $expectedLies[$idx]->id = $details['id'];
-            $expectedLies[$idx]->date = $details['date'];
-            $expectedLies[$idx]->description = $details['description'];
-            $expectedLies[$idx]->user_id = $details['user_id'];
-            $expectedLies[$idx]->valid = $details['valid'];
+            $expectedLies[$idx]->setId($details['id']);
+            $expectedLies[$idx]->setDate($details['date']);
+            $expectedLies[$idx]->setDescription($details['description']);
+            $expectedLies[$idx]->setUserId($details['user_id']);
+            $expectedLies[$idx]->setValid($details['valid']);
         }
 
         // Mock our query object
@@ -193,7 +199,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sth));
             
         // create LieMapper, passing it our mocked DB
-        $lieMapper = new \lies\LieMapper($db);
+        $lieMapper = new LieMapper($db);
 
         // ask it to get all the Lies
         $lies = $lieMapper->getAllValid();
@@ -227,11 +233,13 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         );
         
         // Create collection of Lie objects based on array info
-        $expectedLie = new \lies\LieEntity();
+        $expectedLie = new LieEntity();
 
-        foreach ($lieInfo as $key => $value) {
-            $expectedLie->{$key} = $value;
-        }
+        $expectedLie->setId($lieInfo['id']);
+        $expectedLie->setDate($lieInfo['date']);
+        $expectedLie->setDescription($lieInfo['description']);
+        $expectedLie->setUserId($lieInfo['user_id']);
+        $expectedLie->setValid($lieInfo['valid']);
 
         // Mock our PDO statement
         $sth = $this->getMockBuilder('stdClass')
@@ -260,13 +268,13 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sth));
             
         // create LieMapper, passing it our mocked DB
-        $lieMapper = new \lies\LieMapper($db);
+        $lieMapper = new LieMapper($db);
         $response = $lieMapper->create($expectedLie);
 
         $this->assertTrue($response);
 
         // Verify that we get back the LieEntity we just created
-        $responseLie = $lieMapper->get($expectedLie->id);
+        $responseLie = $lieMapper->get($expectedLie->getId());
 
         $this->assertEquals(
             $expectedLie,
