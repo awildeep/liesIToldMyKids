@@ -2,7 +2,8 @@
 namespace Lies\Entity;
 
 use Lies\Exception\LieException;
-use Lies\Entity\Entity;
+use Lies\Entity\Templates\Entity;
+
 
 class LieEntity extends Entity
 {

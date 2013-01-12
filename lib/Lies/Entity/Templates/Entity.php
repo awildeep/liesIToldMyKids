@@ -1,6 +1,6 @@
 <?php
 
-namespace Lies\Entity;
+namespace Lies\Entity\Templates;
 
 abstract class Entity
 {

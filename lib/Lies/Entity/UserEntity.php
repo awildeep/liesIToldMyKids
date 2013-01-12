@@ -2,7 +2,7 @@
 namespace Lies\Entity;
 
 use Lies\Exception\UserException;
-use Lies\Entity\Entity;
+use Lies\Entity\Templates\Entity;
 
 class UserEntity extends Entity
 {
