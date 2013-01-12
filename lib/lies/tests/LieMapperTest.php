@@ -1,11 +1,9 @@
 <?php
 
-namespace Lies\tests;
+namespace Lies\Tests;
 
 use Lies\Entity\LieEntity;
 use Lies\Entity\LieMapper;
-
-require_once (dirname(__FILE__) . '/bootstrap.php');
 
 class LieMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -46,7 +44,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
                 'date' => time(),
                 'description' => 'Third test lie',
                 'user_id' => time(),
-                'valid' => 0 
+                'valid' => 0
             ),
         );
 
@@ -78,7 +76,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         $db->expects($this->once())
             ->method('prepare')
             ->will($this->returnValue($sth));
-            
+
         // create LieMapper, passing it our mocked DB
         $lieMapper = new LieMapper($db);
 
@@ -106,7 +104,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             'user_id' => time(),
             'valid' => 1
         );
-        
+
         // Create collection of Lie objects based on array info
         $expectedLie = new LieEntity();
 
@@ -130,7 +128,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         $db->expects($this->once())
             ->method('prepare')
             ->will($this->returnValue($sth));
-            
+
         // create LieMapper, passing it our mocked DB
         $lieMapper = new LieMapper($db);
 
@@ -194,7 +192,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         $db->expects($this->once())
             ->method('prepare')
             ->will($this->returnValue($sth));
-            
+
         // create LieMapper, passing it our mocked DB
         $lieMapper = new LieMapper($db);
 
@@ -228,7 +226,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             'user_id' => time(),
             'valid' => 1
         );
-        
+
         // Create collection of Lie objects based on array info
         $expectedLie = new LieEntity();
 
@@ -263,7 +261,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         $db->expects($this->at(1))
             ->method('prepare')
             ->will($this->returnValue($sth));
-            
+
         // create LieMapper, passing it our mocked DB
         $lieMapper = new LieMapper($db);
         $response = $lieMapper->create($expectedLie);
@@ -299,14 +297,14 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         $sth->expects($this->once())
             ->method('rowCount')
             ->will($this->returnValue(1));
-        
+
         $db = $this->getMockBuilder('stdClass')
             ->setMethods(array('prepare'))
             ->getMock();
         $db->expects($this->once())
             ->method('prepare')
             ->will($this->returnValue($sth));
-        
+
         $lieMapper = new LieMapper($db);
         $response = $lieMapper->delete(uniqid());
 

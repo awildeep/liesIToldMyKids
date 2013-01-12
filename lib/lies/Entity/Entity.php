@@ -2,7 +2,8 @@
 
 namespace Lies\Entity;
 
-abstract class Entity {
+abstract class Entity
+{
     private $id;
 
     public function getId()
@@ -15,7 +16,8 @@ abstract class Entity {
         $this->id = $id;
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         return get_object_vars($this);
     }
 }

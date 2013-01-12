@@ -1,10 +1,8 @@
 <?php
 
-namespace Lies\tests;
+namespace Lies\Tests;
 
 use Lies\Entity\UserEntity;
-
-require_once (dirname(__FILE__) . '/bootstrap.php');
 
 class UserEntityTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +10,7 @@ class UserEntityTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function canRetrieveAsArray ()
+    public function canRetrieveAsArray()
     {
         $userInfo = array(
             'id' => time(),
@@ -23,7 +21,7 @@ class UserEntityTest extends \PHPUnit_Framework_TestCase
 
         $user = new UserEntity();
         foreach ($userInfo as $key => $value) {
-            call_user_func(array($user, 'set'.ucfirst($key)), $value);
+            call_user_func(array($user, 'set' . ucfirst($key)), $value);
         }
 
 

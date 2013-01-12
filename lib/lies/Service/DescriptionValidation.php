@@ -2,15 +2,17 @@
 
 namespace Lies\Service;
 
-class DescriptionValidation {
+class DescriptionValidation
+{
     private $validApi;
 
-    public function __construct ($validApi)
+    public function __construct($validApi)
     {
         $this->validApi = $validApi;
     }
 
-    public function validate($description) {
+    public function validate($description)
+    {
 
         $result = $this->validApi->postProfanityFilter(array('description' => $description));
 

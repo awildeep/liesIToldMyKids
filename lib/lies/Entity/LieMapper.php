@@ -22,9 +22,9 @@ class LieMapper
         ";
         $sth = $this->_db->prepare($sql);
         $sth->execute();
-        $rows = $sth->fetchAll(); 
+        $rows = $sth->fetchAll();
 
-        return array_map(array($this, '_createEntityFromRow'), $rows); 
+        return array_map(array($this, '_createEntityFromRow'), $rows);
     }
 
     public function get($id)
@@ -38,7 +38,7 @@ class LieMapper
                 id = :id
         ";
         $sth = $this->_db->prepare($sql);
-        $sth->execute(array(':id'=>$id));
+        $sth->execute(array(':id' => $id));
         $row = $sth->fetch();
 
         if (count($row) > 0) {
@@ -60,9 +60,9 @@ class LieMapper
         ";
         $sth = $this->_db->prepare($sql);
         $sth->execute();
-        $rows = $sth->fetchAll(); 
+        $rows = $sth->fetchAll();
 
-        return array_map(array($this, '_createEntityFromRow'), $rows); 
+        return array_map(array($this, '_createEntityFromRow'), $rows);
     }
 
     public function create(LieEntity $lieEntity)
@@ -88,13 +88,15 @@ class LieMapper
               )
             ";
         $sth = $this->_db->prepare($sql);
-        $response = $sth->execute(array(
-            ':id'           => $lieEntity->getId(),
-            ':date'         => $lieEntity->getDate(),
-            ':description'  => $lieEntity->getDescription(),
-            ':user_id'      => $lieEntity->getUserId(),
-            ':valid'        => $lieEntity->getValid()
-        ));
+        $response = $sth->execute(
+            array(
+                ':id' => $lieEntity->getId(),
+                ':date' => $lieEntity->getDate(),
+                ':description' => $lieEntity->getDescription(),
+                ':user_id' => $lieEntity->getUserId(),
+                ':valid' => $lieEntity->getValid()
+            )
+        );
 
         return $response;
     }
@@ -111,7 +113,7 @@ class LieMapper
         $response = $sth->execute(array(':id' => $lieEntityId));
 
         if ($response != true) {
-            throw new LieException ('Failed to delete lie record ('.$lieEntityId.')');
+            throw new LieException ('Failed to delete lie record (' . $lieEntityId . ')');
         }
 
         if ($sth->rowCount() == 1) {

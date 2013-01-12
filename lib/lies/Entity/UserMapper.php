@@ -39,7 +39,6 @@ class UserMapper
     {
 
 
-
         $sql = "
             INSERT INTO
                 users

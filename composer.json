@@ -24,7 +24,7 @@
             }
         }
     ],
-    "autoload": {"psr-0": {"": "src"}},
+    "autoload": {"psr-0": {"": "lib"}},
     "config": {
         "bin-dir": "bin/"
     }

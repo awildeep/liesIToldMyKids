@@ -20,7 +20,7 @@ class LieEntity extends Entity
     public function setId($id)
     {
         if ($id == null || !is_integer($id)) {
-            throw new LieException ('Invalid ID ('.$id.')');
+            throw new LieException ('Invalid ID (' . $id . ')');
         }
 
         $this->id = $id;
@@ -34,7 +34,7 @@ class LieEntity extends Entity
     public function setDate($date)
     {
         if ($date == null || $date == '') {
-            throw new LieException ('Invalid date ('.$date.')');
+            throw new LieException ('Invalid date (' . $date . ')');
         }
         $this->date = $date;
     }
@@ -47,8 +47,8 @@ class LieEntity extends Entity
     public function setDescription($description)
     {
         //A description should be at least 3 characters
-        if(strlen($description) < 3) {
-            throw new LieException ('Invalid description ('.$description.')');
+        if (strlen($description) < 3) {
+            throw new LieException ('Invalid description (' . $description . ')');
         }
 
         $this->description = $description;
@@ -62,7 +62,7 @@ class LieEntity extends Entity
     public function setUserId($user_id)
     {
         if (!is_integer($user_id)) {
-            throw new LieException ('Invalid ID, must be an integer ('.$user_id.')');
+            throw new LieException ('Invalid ID, must be an integer (' . $user_id . ')');
         }
         $this->user_id = $user_id;
     }
@@ -77,7 +77,8 @@ class LieEntity extends Entity
         $this->valid = $valid;
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         return get_object_vars($this);
     }
 }

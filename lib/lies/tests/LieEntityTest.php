@@ -1,17 +1,15 @@
 <?php
 
-namespace Lies\tests;
+namespace Lies\Tests;
 
 use Lies\Entity\LieEntity;
-
-require_once (dirname(__FILE__) . '/bootstrap.php');
 
 class LieEntityTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function canRetrieveAsArray ()
+    public function canRetrieveAsArray()
     {
         $expected = array(
             'id' => time(),
@@ -50,7 +48,7 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Lies\Exception\LieException
      */
-    public function idCanNotBeNull ()
+    public function idCanNotBeNull()
     {
         $entity = new LieEntity();
         $entity->setId(null);
@@ -60,7 +58,7 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Lies\Exception\LieException
      */
-    public function idCanNotBeEmpty ()
+    public function idCanNotBeEmpty()
     {
         $entity = new LieEntity();
         $entity->setId('');
@@ -95,7 +93,7 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Lies\Exception\LieException
      */
-    public function dateCanNotBeNull ()
+    public function dateCanNotBeNull()
     {
         $entity = new LieEntity();
         $entity->setDate(null);
@@ -105,7 +103,7 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Lies\Exception\LieException
      */
-    public function dateCanNotBeEmpty ()
+    public function dateCanNotBeEmpty()
     {
         $entity = new LieEntity();
         $entity->setDate('');
@@ -129,7 +127,7 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Lies\Exception\LieException
      */
-    public function descriptionCanNotBeNull ()
+    public function descriptionCanNotBeNull()
     {
         $entity = new LieEntity();
         $entity->setDescription(null);
@@ -139,7 +137,7 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Lies\Exception\LieException
      */
-    public function descriptionMustBeAtLeast3CharsLong ()
+    public function descriptionMustBeAtLeast3CharsLong()
     {
         $description = '123';
         $entity = new LieEntity();

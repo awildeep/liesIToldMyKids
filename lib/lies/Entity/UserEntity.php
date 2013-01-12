@@ -20,7 +20,7 @@ class UserEntity extends Entity
     public function setId($id)
     {
         if ($id == null || !is_integer($id)) {
-            throw new UserException ('Invalid ID ('.$id.')');
+            throw new UserException ('Invalid ID (' . $id . ')');
         }
 
         $this->id = $id;
@@ -52,7 +52,8 @@ class UserEntity extends Entity
         $this->password = $password;
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         return get_object_vars($this);
     }
 

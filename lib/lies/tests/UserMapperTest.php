@@ -1,11 +1,9 @@
 <?php
 
-namespace Lies\tests;
+namespace Lies\Tests;
 
 use Lies\Entity\UserEntity;
 use Lies\Entity\UserMapper;
-
-require_once (dirname(__FILE__) . '/bootstrap.php');
 
 class UserMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,7 +22,7 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
         // Create collection of Lie objects based on array info
         $expectedUser = new UserEntity();
         foreach ($userInfo as $key => $value) {
-            call_user_func(array($expectedUser, 'set'.ucfirst($key)), $value);
+            call_user_func(array($expectedUser, 'set' . ucfirst($key)), $value);
         }
 
         // Mock our PDO statement
@@ -69,7 +67,7 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
 
         $expectedUser = new UserEntity();
         foreach ($userInfo as $key => $value) {
-            call_user_func(array($expectedUser, 'set'.ucfirst($key)), $value);
+            call_user_func(array($expectedUser, 'set' . ucfirst($key)), $value);
         }
 
         //STMT: INSERT

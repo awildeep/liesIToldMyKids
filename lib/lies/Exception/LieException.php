@@ -1,6 +1,7 @@
 <?php
 namespace Lies\Exception;
 
-class LieException extends \Exception {
+class LieException extends \Exception
+{
 
 }

@@ -1,17 +1,15 @@
 <?php
 
-namespace Lies\tests;
+namespace Lies\Tests;
 
 use Lies\Service\DescriptionValidation;
-
-require_once (dirname(__FILE__) . '/bootstrap.php');
 
 class DescriptionValidationServiceTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      */
-    public function validatesDescription ()
+    public function validatesDescription()
     {
         $apiMock = $this->getMockBuilder('stdClass')
             ->setMethods(array('postProfanityFilter'))
@@ -23,6 +21,6 @@ class DescriptionValidationServiceTest extends \PHPUnit_Framework_TestCase
 
         $validator = new DescriptionValidation($apiMock);
         $return = $validator->validate('My description');
-        $this->assertTrue ($return, 'Expected true value ('.$return.')');
+        $this->assertTrue($return, 'Expected true value (' . $return . ')');
     }
 }
