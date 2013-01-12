@@ -6,10 +6,12 @@ use \Lies\Exception\LieException;
 class LieMapper
 {
     protected $_db;
+    protected $_descriptionValidatorApi;
 
-    public function __construct($db)
+    public function __construct($db, $descriptionValidatorApi)
     {
         $this->_db = $db;
+        $this->_descriptionValidatorApi = $descriptionValidatorApi;
     }
 
     public function getAll()
@@ -125,7 +127,7 @@ class LieMapper
 
     protected function _createEntityFromRow($row)
     {
-        $lie = new LieEntity();
+        $lie = new LieEntity($this->_descriptionValidatorApi);
         $lie->setId($row['id']);
         $lie->setDate($row['date']);
         $lie->setDescription($row['description']);

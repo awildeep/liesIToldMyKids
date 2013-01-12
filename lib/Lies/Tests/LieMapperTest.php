@@ -4,6 +4,7 @@ namespace Lies\Tests;
 
 use Lies\Entity\LieEntity;
 use Lies\Entity\LieMapper;
+use Lies\Service\DescriptionValidation;
 
 class LieMapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -48,11 +49,21 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ),
         );
 
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->any())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+
+        $validator = new DescriptionValidation($apiMock);
+
         // Create collection of Lie objects based on array info
         $expectedLies = array();
-        $expectedLies[0] = new LieEntity();
-        $expectedLies[1] = new LieEntity();
-        $expectedLies[2] = new LieEntity();
+        $expectedLies[0] = new LieEntity($validator);
+        $expectedLies[1] = new LieEntity($validator);
+        $expectedLies[2] = new LieEntity($validator);
 
         foreach ($lieInfo as $idx => $details) {
             $expectedLies[$idx]->setId($details['id']);
@@ -78,7 +89,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sth));
 
         // create LieMapper, passing it our mocked DB
-        $lieMapper = new LieMapper($db);
+        $lieMapper = new LieMapper($db, $validator);
 
         // ask it to get all the Lies
         $lies = $lieMapper->getAll();
@@ -96,6 +107,16 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function getOneRecord()
     {
+
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->any())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         // Create our raw Lie info 
         $lieInfo = array(
             'id' => time(),
@@ -106,7 +127,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         // Create collection of Lie objects based on array info
-        $expectedLie = new LieEntity();
+        $expectedLie = new LieEntity($validator);
 
         $expectedLie->setId($lieInfo['id']);
         $expectedLie->setDate($lieInfo['date']);
@@ -130,7 +151,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sth));
 
         // create LieMapper, passing it our mocked DB
-        $lieMapper = new LieMapper($db);
+        $lieMapper = new LieMapper($db, $validator);
 
         // ask it to get all the Lies
         $lie = $lieMapper->get($lieInfo['id']);
@@ -148,6 +169,15 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function getValidLies()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->any())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $lieInfo = array(
             array(
                 'id' => time(),
@@ -167,8 +197,8 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
 
         // Create collection of Lie objects based on array info
         $expectedLies = array();
-        $expectedLies[0] = new LieEntity();
-        $expectedLies[1] = new LieEntity();
+        $expectedLies[0] = new LieEntity($validator);
+        $expectedLies[1] = new LieEntity($validator);
 
         foreach ($lieInfo as $idx => $details) {
             $expectedLies[$idx]->setId($details['id']);
@@ -194,7 +224,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sth));
 
         // create LieMapper, passing it our mocked DB
-        $lieMapper = new LieMapper($db);
+        $lieMapper = new LieMapper($db, $validator);
 
         // ask it to get all the Lies
         $lies = $lieMapper->getAllValid();
@@ -212,6 +242,15 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function createNewLie()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->any())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         /**
          * Create a new LieEntity in a known state
          * Create a new LieMapper
@@ -228,7 +267,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
         );
 
         // Create collection of Lie objects based on array info
-        $expectedLie = new LieEntity();
+        $expectedLie = new LieEntity($validator);
 
         $expectedLie->setId($lieInfo['id']);
         $expectedLie->setDate($lieInfo['date']);
@@ -263,7 +302,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($sth));
 
         // create LieMapper, passing it our mocked DB
-        $lieMapper = new LieMapper($db);
+        $lieMapper = new LieMapper($db, $validator);
         $response = $lieMapper->create($expectedLie);
 
         $this->assertTrue($response);
@@ -283,6 +322,15 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
      */
     public function deleteKnownCreatedEntity()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         /**
          * Given a known Entity ID
          * Tell me if it was actually deleted
@@ -305,7 +353,7 @@ class LieMapperTest extends \PHPUnit_Framework_TestCase
             ->method('prepare')
             ->will($this->returnValue($sth));
 
-        $lieMapper = new LieMapper($db);
+        $lieMapper = new LieMapper($db, $validator);
         $response = $lieMapper->delete(uniqid());
 
         $this->assertTrue($response);

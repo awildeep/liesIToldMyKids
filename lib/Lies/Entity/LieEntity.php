@@ -6,11 +6,18 @@ use Lies\Entity\Entity;
 
 class LieEntity extends Entity
 {
+    private $descValidationApi;
+
     private $id;
     private $date;
     private $description;
     private $user_id;
     private $valid;
+
+    public function __construct($descValidationApi)
+    {
+        $this->descValidationApi = $descValidationApi;
+    }
 
     public function getId()
     {
@@ -51,6 +58,8 @@ class LieEntity extends Entity
             throw new LieException ('Invalid description (' . $description . ')');
         }
 
+        $this->setValid($this->descValidationApi->validate($description));
+
         $this->description = $description;
     }
 
@@ -79,6 +88,12 @@ class LieEntity extends Entity
 
     public function toArray()
     {
-        return get_object_vars($this);
+        $returnable = get_object_vars($this);
+        foreach ($returnable as $key => $value) {
+            if (in_array($key, array('descValidationApi'))) {
+                unset ($returnable[$key]);
+            }
+        }
+        return $returnable;
     }
 }

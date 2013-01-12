@@ -3,6 +3,7 @@
 namespace Lies\Tests;
 
 use Lies\Entity\LieEntity;
+use Lies\Service\DescriptionValidation;
 
 class LieEntityTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,6 +12,15 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function canRetrieveAsArray()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->once())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $expected = array(
             'id' => time(),
             'date' => time(),
@@ -19,7 +29,7 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
             'valid' => 1
         );
 
-        $lie = new LieEntity();
+        $lie = new LieEntity($validator);
         $lie->setId($expected['id']);
         $lie->setDate($expected['date']);
         $lie->setDescription($expected['description']);
@@ -35,8 +45,17 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function idCanBeSetAndRetrieved()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $id = time();
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setId($id);
 
         //$this->assertAttributeContains($id, 'id', $entity, 'Attribute id is not set');
@@ -50,7 +69,16 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function idCanNotBeNull()
     {
-        $entity = new LieEntity();
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
+        $entity = new LieEntity($validator);
         $entity->setId(null);
     }
 
@@ -60,7 +88,16 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function idCanNotBeEmpty()
     {
-        $entity = new LieEntity();
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
+        $entity = new LieEntity($validator);
         $entity->setId('');
     }
 
@@ -70,8 +107,17 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function idMustBeSetAnInteger()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $id = '1e123d';
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setId($id);
     }
 
@@ -80,8 +126,17 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function dateCanBeSetAndRetrieved()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $date = time();
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setDate($date);
 
         //$this->assertAttributeContains($date, 'date', $entity, 'Attribute date is not set');
@@ -95,7 +150,16 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function dateCanNotBeNull()
     {
-        $entity = new LieEntity();
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
+        $entity = new LieEntity($validator);
         $entity->setDate(null);
     }
 
@@ -105,7 +169,16 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function dateCanNotBeEmpty()
     {
-        $entity = new LieEntity();
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
+        $entity = new LieEntity($validator);
         $entity->setDate('');
     }
 
@@ -114,8 +187,17 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function descriptionCanBeSetAndRetrieved()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->once())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $description = 'Description';
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setDescription($description);
 
         //$this->assertAttributeContains($date, 'date', $entity, 'Attribute date is not set');
@@ -129,7 +211,16 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function descriptionCanNotBeNull()
     {
-        $entity = new LieEntity();
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
+        $entity = new LieEntity($validator);
         $entity->setDescription(null);
     }
 
@@ -139,12 +230,21 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function descriptionMustBeAtLeast3CharsLong()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->once())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $description = '123';
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setDescription($description);
         $this->assertEquals($description, $entity->getDescription(), 'Descriptions do not match');
 
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setDescription('12');
     }
 
@@ -153,8 +253,17 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function userIdCanBeSetAndRetrieved()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $userId = time();
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setUserId($userId);
 
         //$this->assertAttributeContains($date, 'date', $entity, 'Attribute date is not set');
@@ -168,8 +277,17 @@ class LieEntityTest extends \PHPUnit_Framework_TestCase
      */
     public function userIdMustBeSetAnInteger()
     {
+        $apiMock = $this->getMockBuilder('stdClass')
+            ->setMethods(array('postProfanityFilter'))
+            ->getMock();
+        $apiMock->expects($this->never())
+            ->method('postProfanityFilter')
+            ->will($this->returnValue(true));
+
+        $validator = new DescriptionValidation($apiMock);
+
         $userId = '1e123d';
-        $entity = new LieEntity();
+        $entity = new LieEntity($validator);
         $entity->setUserId($userId);
     }
 
