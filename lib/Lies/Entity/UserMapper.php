@@ -103,7 +103,7 @@ class UserMapper
             return true;
         }
 
-        throw new UserException ('Multiple users deleted '.$stmt->rowCount());
+        throw new UserException ('Multiple users deleted ' . $stmt->rowCount());
     }
 
     protected function _createEntityFromRow($row)
