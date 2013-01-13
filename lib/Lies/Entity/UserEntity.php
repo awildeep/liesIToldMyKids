@@ -52,11 +52,6 @@ class UserEntity extends Entity
         $this->password = $password;
     }
 
-    public function toArray()
-    {
-        return get_object_vars($this);
-    }
-
     public function getRole()
     {
         return $this->role;
@@ -68,5 +63,10 @@ class UserEntity extends Entity
             throw new UserException('Invalid role (' . $role . ').');
         }
         $this->role = $role;
+    }
+
+    public function toArray()
+    {
+        return get_object_vars($this);
     }
 }

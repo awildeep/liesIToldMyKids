@@ -10,6 +10,76 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function returnsUserCollection()
+    {
+        // Create our collection of Lies
+        $userInfo = array(
+            array(
+                'id' => time(),
+                'email' => 'junker@thinkof.net',
+                'password' => uniqid(),
+                'role' => 'admin',
+            ),
+            array(
+                'id' => time(),
+                'email' => 'junky@thinkof.net',
+                'password' => uniqid(),
+                'role' => 'user',
+            ),
+            array(
+                'id' => time(),
+                'email' => 'junk@thinkof.net',
+                'password' => uniqid(),
+                'role' => 'user',
+            ),
+        );
+
+        // Create collection of Lie objects based on array info
+        $expectedUsers = array();
+        $expectedUsers[0] = new UserEntity();
+        $expectedUsers[1] = new UserEntity();
+        $expectedUsers[2] = new UserEntity();
+
+        foreach ($userInfo as $idx => $details) {
+            $expectedUsers[$idx]->setId($details['id']);
+            $expectedUsers[$idx]->setEmail($details['email']);
+            $expectedUsers[$idx]->setPassword($details['password']);
+            $expectedUsers[$idx]->setRole($details['role']);
+        }
+
+        // Mock our query object
+        $sth = $this->getMockBuilder('stdClass')
+            ->setMethods(array('execute', 'fetchAll'))
+            ->getMock();
+        $sth->expects($this->once())
+            ->method('fetchAll')
+            ->will($this->returnValue($userInfo));
+
+        $db = $this->getMockBuilder('stdClass')
+            ->setMethods(array('prepare'))
+            ->getMock();
+        $db->expects($this->once())
+            ->method('prepare')
+            ->will($this->returnValue($sth));
+
+        // create LieMapper, passing it our mocked DB
+        $userMapper = new UserMapper($db);
+
+        // ask it to get all the Lies
+        $users = $userMapper->getAll();
+
+        // assert that collections are the same
+        $this->assertEquals(
+            $expectedUsers,
+            $users,
+            "UserMapper::getAll() did not return expected collection"
+        );
+    }
+
+
+    /**
+     * @test
+     */
     public function fetchOneUser()
     {
         // Create our raw Lie info
@@ -17,6 +87,7 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
             'id' => time(),
             'email' => 'junk@thinkof.net',
             'password' => uniqid(),
+            'role' => 'admin',
         );
 
         // Create collection of Lie objects based on array info
@@ -63,6 +134,7 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
             'id' => time(),
             'email' => 'junk@thinkof.net',
             'password' => uniqid(),
+            'role' => 'admin',
         );
 
         $expectedUser = new UserEntity();
@@ -115,5 +187,39 @@ class UserMapperTest extends \PHPUnit_Framework_TestCase
             $responseUser,
             "Did not get back our expected UserEntity"
         );
+    }
+
+    /**
+     * @test
+     */
+    public function deleteKnownCreatedEntity()
+    {
+
+        /**
+         * Given a known Entity ID
+         * Tell me if it was actually deleted
+         */
+
+        $sth = $this->getMockBuilder('stdClass')
+            ->setMethods(array('execute', 'rowCount'))
+            ->getMock();
+        $sth->expects($this->once())
+            ->method('execute')
+            ->will($this->returnValue(true));
+        $sth->expects($this->once())
+            ->method('rowCount')
+            ->will($this->returnValue(1));
+
+        $db = $this->getMockBuilder('stdClass')
+            ->setMethods(array('prepare'))
+            ->getMock();
+        $db->expects($this->once())
+            ->method('prepare')
+            ->will($this->returnValue($sth));
+
+        $userMapper = new UserMapper($db);
+        $response = $userMapper->delete(uniqid());
+
+        $this->assertTrue($response);
     }
 }
